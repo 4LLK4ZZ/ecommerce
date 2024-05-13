@@ -101,7 +101,7 @@ class Criar(BasePerfil):
         self.request.session['carrinho'] = self.carrinho
         self.request.session.save()
 
-        return redirect('produto:carrinho')
+        return redirect('perfil:criar')
         return self.renderizar
     
 
