@@ -9,7 +9,8 @@
     <div class="col-lg mt-3">
         <h4>Login</h4>
         <p>Se você já fez cadastro, basta entrar com seu usuário e senha abaixo:</p>
-        <form>
+        <form method="POST" action="{% url 'perfil:login' %}">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="InputUsuario1">Usuário:</label>
                 <input type="Usuario" name='username' class="form-control" id="exampleInputUsuario1"
@@ -18,7 +19,7 @@
             <div class="form-group">
                 <label for="exampleInputPassword1">Senha:</label>
                 <input type="password" name='password' class="form-control" id="exampleInputPassword1"
-                    placeholder="Password">
+                    placeholder="Digite sua senha">
             </div>
             <button type="submit" class="btn btn-primary btn-block btn-lg">Entrar</button>
         </form>
