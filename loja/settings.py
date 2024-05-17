@@ -44,9 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap4',
-
-    # TODO: Remover debug_toolbar
-    'debug_toolbar',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -57,12 +54,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    #TODO: Remover Debug Toolbar
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-
-    
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',  
 ]
 
 ROOT_URLCONF = 'loja.urls'
@@ -165,10 +157,3 @@ SESSION_SAVE_EVERY_REQUEST = False
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# TODO: Remover debug Toolbar
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
-]

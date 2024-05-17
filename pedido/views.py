@@ -1,13 +1,14 @@
-from typing import Any
-from django.db.models.query import QuerySet
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import redirect, reverse
 from django.views.generic import ListView, DetailView
 from django.views import View
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from django.contrib import messages
+
 from produto.models import Variacao
-from utils import utils
 from .models import Pedido, ItemPedido
+
+from utils import utils
+
 
 class DispatchLoginRequired(View):
     def dispatch(self, *args, **kwargs):
@@ -16,19 +17,22 @@ class DispatchLoginRequired(View):
 
         return super().dispatch(*args, **kwargs)
 
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.filter(usuario=self.request.user)
+        return qs
+
+
 class Pagar(DispatchLoginRequired, DetailView):
     template_name = 'pedido/pagar.html'
     model = Pedido
     pk_url_kwarg = 'pk'
     context_object_name = 'pedido'
 
-    def get_queryset(self, *args, **kwargs):
-        qs = super().get_queryset(*args, **kwargs)
-        qs = qs.filter(usuario=self.request.user)
-        return qs
 
 class SalvarPedido(View):
     template_name = 'pedido/pagar.html'
+
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             messages.error(
@@ -88,7 +92,7 @@ class SalvarPedido(View):
             usuario=self.request.user,
             total=valor_total_carrinho,
             qtd_total=qtd_total_carrinho,
-            status='C'
+            status='C',
         )
 
         pedido.save()
@@ -120,10 +124,17 @@ class SalvarPedido(View):
             )
         )
 
-class Detalhe(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse('Detalhe')
-    
-class Lista(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse('Lista')
+
+class Detalhe(DispatchLoginRequired, DetailView):
+    model = Pedido
+    context_object_name = 'pedido'
+    template_name = 'pedido/detalhe.html'
+    pk_url_kwarg = 'pk'
+
+
+class Lista(DispatchLoginRequired, ListView):
+    model = Pedido
+    context_object_name = 'pedidos'
+    template_name = 'pedido/lista.html'
+    paginate_by = 10
+    ordering = ['-id']

@@ -1,5 +1,7 @@
-{% extends 'static/base.html' %}
+{% extends 'base.html' %}
 {% load omfilters %}
+
+{% block titulo %}Resumo da compra | {% endblock %}
 
 {% block conteudo %}
 <div class="row mb-5">
@@ -62,7 +64,8 @@
 </div>
 <div class="row mt-3">
     <div class="col">
-        <p class="lead"><span class="font-weight-bold"> TOTAL DO CARRINHO: {{ carrinho|cart_totals|formata_preco}}</span></p>
+        <p class="lead"><span class="font-weight-bold"> TOTAL DO CARRINHO: {{
+                carrinho|cart_totals|formata_preco}}</span></p>
     </div>
 </div>
 

@@ -1,5 +1,7 @@
-{% extends 'static/base.html' %}
+{% extends 'base.html' %}
 {% load omfilters %}
+
+{% block titulo %}{{ produto.nome }} | {% endblock %}
 
 {% block conteudo %}
 <div class="row">
